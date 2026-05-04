@@ -3,37 +3,31 @@ name: CI
 on:
   workflow_dispatch
 
+
 jobs:
   job1:
-    name: JR pipeline effort
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code 
-      uses: actions/checkout@v6
-
-    - name: print workspace 
+    - uses: actions/checkout@v6
       run: |
         echo ${{ github.workspace }}
         echo $GITHUB_WORKSPACE 
 
-    - name: setup python
+    - name: Set up Python 3.12
       uses: actions/setup-python@v6
       with:
-        python-version: '3.12'
+          python-version: '3.12'
     - name: confirm python version
       run:
         python --version
 
-    - name: clean_data
+    - name: clean-data
       run: |
         cd ModelCleaning
-        pwd
         ls -al
-        pwd
         pip install pandas
         python Cleandata.py
-
-    - name: train_da_model
+    - name: train_model
       run: |
         pip install scikit-learn joblib
         python ModelCleaning/train_test_dataset.py 

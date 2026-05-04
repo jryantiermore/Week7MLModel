@@ -5,9 +5,35 @@ on:
 
 jobs:
   job1:
+    name: JR pipeline effort
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v6
-    - run: |
+    - name: Checkout code 
+      uses: actions/checkout@v6
+
+    - name: print workspace 
+      run: |
         echo ${{ github.workspace }}
         echo $GITHUB_WORKSPACE 
+
+    - name: setup python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.12'
+    - name: confirm python version
+      run:
+        python --version
+
+    - name: clean_data
+      run: |
+        cd ModelCleaning
+        pwd
+        ls -al
+        pip install pandas
+        python Cleandata.py
+
+    - name: train_da_model
+      run: |
+        pip install scikit-learn joblib
+        python ModelCleaning/train_test_dataset.py 
+    
